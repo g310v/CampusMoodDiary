@@ -306,18 +306,25 @@
     }
 
     .hero-screenshot {
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: linear-gradient(135deg, #141826, #05060a);
-      height: 190px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 13px;
-      text-align: center;
-      padding: 0 18px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: linear-gradient(135deg, #141826, #05060a);
+        overflow: hidden;               /* ensures rounded corners apply */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        height: auto;                   /* allow natural image height */
     }
+
+    .hero-screenshot img {
+        width: 100%;                    /* fill width of container */
+        height: auto;                   /* keep natural aspect ratio */
+        display: block;
+        object-fit: contain;            /* show entire image without cropping */
+    }
+
+
 
     .hero-stats {
       display: grid;
@@ -648,7 +655,7 @@
         <p class="section-subtitle">
           The game aims to help students see how everyday behaviors on campus are
           linked to psychological states, and to practice balancing study, rest,
-          and social life in a low-risk environment.:contentReference[oaicite:2]{index=2}
+          and social life in a low-risk environment.
         </p>
 
         <div class="grid-2">
@@ -658,7 +665,7 @@
             <ul>
               <li>• Make the connection between choices, consequences, and mood more visible.</li>
               <li>• Encourage balanced decision-making between short-term comfort and long-term benefit.</li>
-              <li>• Support simple emotional self-regulation and reflection on campus life.:contentReference[oaicite:3]{index=3}</li>
+              <li>• Support simple emotional self-regulation and reflection on campus life.</li>
             </ul>
           </article>
 
@@ -668,7 +675,7 @@
             <ul>
               <li>• CUHKSZ students, especially freshmen adapting to campus life.</li>
               <li>• Classmates and instructors evaluating serious game design.</li>
-              <li>• Anyone curious about interactive representations of student wellbeing.:contentReference[oaicite:4]{index=4}</li>
+              <li>• Anyone curious about interactive representations of student wellbeing.</li>
             </ul>
           </article>
         </div>
@@ -693,7 +700,7 @@
                 <div class="timeline-title">Everyday CUHKSZ situations</div>
                 <div class="timeline-body">
                   Players encounter familiar campus scenarios such as early-morning
-                  classes, overlapping deadlines, club activities, and group work.:contentReference[oaicite:5]{index=5}
+                  classes, overlapping deadlines, club activities, and group work.
                 </div>
               </li>
               <li class="timeline-item">
@@ -702,7 +709,7 @@
                 <div class="timeline-body">
                   Each scene offers a few realistic choices that trade off immediate
                   comfort (e.g., sleeping in) against long-term value (e.g., attending
-                  class or preparing in advance).:contentReference[oaicite:6]{index=6}
+                  class or preparing in advance).
                 </div>
               </li>
               <li class="timeline-item">
@@ -711,7 +718,7 @@
                 <div class="timeline-body">
                   Mood, confidence, anxiety, academic progress, and social interaction
                   are shown as simple monochrome bars at the top of the screen, updating
-                  in real time as players make decisions.:contentReference[oaicite:7]{index=7}
+                  in real time as players make decisions.
                 </div>
               </li>
             </ul>
@@ -753,24 +760,38 @@
         <h2 class="section-title">Project team</h2>
         <p class="section-subtitle">
           Campus Mood Diary was developed by Group 2 – APlease for GEB2507 under the
-          supervision of Instructor Sahba Zojaji.:contentReference[oaicite:8]{index=8}
+          supervision of Dr. Sahba Zojaji.
         </p>
 
         <div class="team-grid">
           <div class="team-card">
-            <div class="team-role">Project lead</div>
-            <div class="team-name">[Your Name]</div>
+            <div class="team-role">Team Member</div>
+            <div class="team-name">Christian Angelo Velarde</div>
             <div class="team-meta">
-              Design, writing, implementation in Ren’Py, and documentation.
+                Programming, UI implementation, and website development.
             </div>
           </div>
 
           <!-- Duplicate this block for each teammate if needed -->
           <div class="team-card">
             <div class="team-role">Team member</div>
-            <div class="team-name">[Teammate Name]</div>
+            <div class="team-name">Haoyu Tian</div>
             <div class="team-meta">
-              [Brief contribution summary, e.g., scenario design, UI ideas, or testing.]
+                To be filled in with role description.
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-role">Team member</div>
+            <div class="team-name">Weiyi Chen</div>
+            <div class="team-meta">
+                To be filled in with role description.
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-role">Team member</div>
+            <div class="team-name">Fanqihang Zhang</div>
+            <div class="team-meta">
+                To be filled in with role description.
             </div>
           </div>
         </div>
