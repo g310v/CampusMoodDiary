@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Mood Diary – Project Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Campus Mood Diary is a short Ren'Py serious game about daily choices, mood, and campus life at CUHK-Shenzhen."
+  />
+
+  <style>
+    :root {
+      --bg: #05060a;
+      --bg-alt: #0d1018;
+
+      /* Purple accent theme */
+      --accent: #b38bff;
+      --accent-soft: rgba(179, 139, 255, 0.14);
+      --accent-strong: #c7a8ff;
+
+      --text-main: #f3f0ff;
+      --text-muted: #b7b2cc;
+      --border-subtle: #2b2d3f;
+      --card-radius: 18px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+      --max-width: 1080px;
+      --transition-fast: 180ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111526 0, #020308 55%);
+      color: var(--text-main);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(
+        180deg,
+        rgba(3, 6, 12, 0.92) 0%,
+        rgba(3, 6, 12, 0.78) 60%,
+        transparent 100%
+      );
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at 30% 0%, #b38bff 0, #1d2436 50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    nav a {
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: background-color var(--transition-fast),
+        border-color var(--transition-fast), color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    nav a:hover {
+      color: var(--text-main);
+      background: var(--accent-soft);
+      border-color: rgba(179, 139, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 32px 20px 20px;
+    }
+
+    section + section {
+      margin-top: 10px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .hero {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 4vw, 40px);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background-color: var(--accent-soft);
+      border: 1px solid rgba(179, 139, 255, 0.4);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .hero-tagline {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      max-width: 520px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+
+    .pill {
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(9, 12, 22, 0.95);
+      color: var(--text-muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 14px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color var(--transition-fast),
+        border-color var(--transition-fast), transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #b38bff, #8f5eff);
+      color: #1a102b;
+      font-weight: 600;
+      box-shadow: 0 12px 24px rgba(147, 112, 219, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(147, 112, 219, 0.38);
+    }
+
+    .btn-ghost {
+      background: rgba(8, 12, 22, 0.9);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(12, 16, 26, 1);
+      transform: translateY(-1px);
+    }
+
+    .hero-right {
+      border-radius: 22px;
+      padding: 18px 18px 20px;
+      background: radial-gradient(circle at top left, #1b2337 0, #05060a 55%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .hero-right-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .hero-right-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .hero-right-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-screenshot {
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(135deg, #141826, #05060a);
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 0 18px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      font-size: 11px;
+    }
+
+    .hero-stat {
+      padding: 9px 10px;
+      border-radius: 14px;
+      background-color: rgba(9, 11, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-stat-label {
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .hero-stat-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card {
+      border-radius: var(--card-radius);
+      background-color: rgba(8, 11, 20, 0.96);
+      border: 1px solid var(--border-subtle);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card + .card {
+      margin-top: 12px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .card ul {
+      list-style: none;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .card ul li + li {
+      margin-top: 6px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .timeline {
+      list-style: none;
+      margin-top: 10px;
+      padding-left: 0;
+    }
+
+    .timeline-item + .timeline-item {
+      margin-top: 14px;
+    }
+
+    .timeline-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .timeline-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .timeline-body {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .pill-soft {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background-color: rgba(18, 24, 40, 1);
+      border: 1px solid rgba(179, 139, 255, 0.3);
+      color: var(--accent);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .team-card {
+      border-radius: 16px;
+      background-color: rgba(9, 13, 22, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 12px 13px;
+    }
+
+    .team-role {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .team-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .team-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .link-chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(8, 11, 20, 0.96);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .link-chip span.icon {
+      font-size: 14px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 40px;
+      padding: 18px 20px 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--accent);
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 26px;
+      }
+
+      .hero-right {
+        order: -1;
+      }
+
+      .nav-inner {
+        padding-inline: 14px;
+      }
+
+      section {
+        padding-inline: 14px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      nav ul {
+        justify-content: flex-end;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("a[href^='#']").forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href").substring(1);
+          const target = document.getElementById(targetId);
+          if (target) {
+            e.preventDefault();
+            window.scrollTo({
+              top: target.offsetTop - 70,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="brand-logo">CM</div>
+          <div class="brand-text">
+            <div class="brand-text-title">Campus Mood Diary</div>
+            <div class="brand-text-sub">A Ren'Py serious game for CUHKSZ students</div>
+          </div>
+        </div>
+
+        <nav>
+          <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#purpose">Purpose</a></li>
+            <li><a href="#design">Design</a></li>
+            <li><a href="#findings">Findings</a></li>
+            <li><a href="#team">Team</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero" id="overview">
+        <div class="hero-left">
+          <div class="hero-highlight">
+            <span>Student Project · GEB2507</span>
+          </div>
+
+          <h1 class="hero-title">
+            Campus Mood Diary<br />
+            <span style="color: var(--accent)">Daily choices, mood, and campus life</span>
+          </h1>
+
+          <p class="hero-tagline">
+            Campus Mood Diary is a short text-based interactive game where you play
+            as a CUHK-Shenzhen student making everyday choices that affect mood,
+            confidence, anxiety, academics, and social life.
+          </p>
+
+          <div class="hero-meta">
+            <span class="pill">Ren'Py · Visual novel style</span>
+            <span class="pill">GEB2507 – AI-Driven Virtual Worlds and Serious Games</span>
+            <span class="pill">The Chinese University of Hong Kong, Shenzhen</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="https://g310v.itch.io/campus-mood-diary" class="btn-primary" target="_blank">
+              Play Campus Mood Diary
+            </a>
+            <a href="#purpose" class="btn-ghost">
+              View project overview
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-right-header">
+            <div>
+              <div class="hero-right-title">Project snapshot</div>
+              <div class="hero-right-tag">
+                A concise serious game prototype for course assessment.
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-screenshot">
+            <!-- Replace this with an actual screenshot later -->
+            <img src="project_assets/gameplay_screenshot.png" alt="Screenshot of Campus Mood Diary game interface" />
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-label">Playtime</div>
+              <div class="hero-stat-value">~[3-5] min</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-label">Endings</div>
+              <div class="hero-stat-value">[Multiple]</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-label">Engine</div>
+              <div class="hero-stat-value">Ren'Py</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Purpose -->
+      <section id="purpose">
+        <div class="section-label">Project purpose</div>
+        <h2 class="section-title">Why we built Campus Mood Diary</h2>
+        <p class="section-subtitle">
+          The game aims to help students see how everyday behaviors on campus are
+          linked to psychological states, and to practice balancing study, rest,
+          and social life in a low-risk environment.:contentReference[oaicite:2]{index=2}
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3 class="card-title">Core serious goals</h3>
+            <p class="card-tagline">What the game is trying to teach.</p>
+            <ul>
+              <li>• Make the connection between choices, consequences, and mood more visible.</li>
+              <li>• Encourage balanced decision-making between short-term comfort and long-term benefit.</li>
+              <li>• Support simple emotional self-regulation and reflection on campus life.:contentReference[oaicite:3]{index=3}</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3 class="card-title">Intended players</h3>
+            <p class="card-tagline">Who this is designed for.</p>
+            <ul>
+              <li>• CUHKSZ students, especially freshmen adapting to campus life.</li>
+              <li>• Classmates and instructors evaluating serious game design.</li>
+              <li>• Anyone curious about interactive representations of student wellbeing.:contentReference[oaicite:4]{index=4}</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Design -->
+      <section id="design">
+        <div class="section-label">Design</div>
+        <h2 class="section-title">How the game works</h2>
+        <p class="section-subtitle">
+          The design focuses on short vignette-style scenes, simple choices, and
+          clear stat feedback, implemented in Ren’Py with a clean, minimal UI.
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3 class="card-title">Core gameplay</h3>
+            <p class="card-tagline">Scenes, choices, and feedback.</p>
+            <ul class="timeline">
+              <li class="timeline-item">
+                <div class="timeline-label">Scenes</div>
+                <div class="timeline-title">Everyday CUHKSZ situations</div>
+                <div class="timeline-body">
+                  Players encounter familiar campus scenarios such as early-morning
+                  classes, overlapping deadlines, club activities, and group work.:contentReference[oaicite:5]{index=5}
+                </div>
+              </li>
+              <li class="timeline-item">
+                <div class="timeline-label">Choices</div>
+                <div class="timeline-title">2–3 grounded options</div>
+                <div class="timeline-body">
+                  Each scene offers a few realistic choices that trade off immediate
+                  comfort (e.g., sleeping in) against long-term value (e.g., attending
+                  class or preparing in advance).:contentReference[oaicite:6]{index=6}
+                </div>
+              </li>
+              <li class="timeline-item">
+                <div class="timeline-label">Feedback</div>
+                <div class="timeline-title">Five simple status bars</div>
+                <div class="timeline-body">
+                  Mood, confidence, anxiety, academic progress, and social interaction
+                  are shown as simple monochrome bars at the top of the screen, updating
+                  in real time as players make decisions.:contentReference[oaicite:7]{index=7}
+                </div>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3 class="card-title">Design choices</h3>
+            <p class="card-tagline">Simplified but grounded implementation.</p>
+            <ul>
+              <li>• Built in Ren’Py as a text-based visual novel for quick iteration.</li>
+              <li>• Kept a clean dark UI with straightforward stat bars instead of color-coding.</li>
+              <li>• Light background music and an end-of-day stats summary to reinforce reflection.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Findings (placeholder only) -->
+      <section id="findings">
+        <div class="section-label">Findings</div>
+        <h2 class="section-title">What we learned (coming soon)</h2>
+        <p class="section-subtitle">
+          The findings and reflections from playtesting and evaluation will be added
+          here after data collection and analysis are complete.
+        </p>
+
+        <article class="card">
+          <h3 class="card-title">Summary of findings</h3>
+          <p class="card-tagline">
+            This section will summarise key insights from player feedback, in-game data,
+            and any pre–post measurements used in the final report.
+          </p>
+        </article>
+      </section>
+
+      <!-- Team -->
+      <section id="team">
+        <div class="section-label">Team</div>
+        <h2 class="section-title">Project team</h2>
+        <p class="section-subtitle">
+          Campus Mood Diary was developed by Group 2 – APlease for GEB2507 under the
+          supervision of Instructor Sahba Zojaji.:contentReference[oaicite:8]{index=8}
+        </p>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-role">Project lead</div>
+            <div class="team-name">[Your Name]</div>
+            <div class="team-meta">
+              Design, writing, implementation in Ren’Py, and documentation.
+            </div>
+          </div>
+
+          <!-- Duplicate this block for each teammate if needed -->
+          <div class="team-card">
+            <div class="team-role">Team member</div>
+            <div class="team-name">[Teammate Name]</div>
+            <div class="team-meta">
+              [Brief contribution summary, e.g., scenario design, UI ideas, or testing.]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Downloads / links -->
+      <section id="downloads">
+        <div class="section-label">Links</div>
+        <h2 class="section-title">Play and project materials</h2>
+        <p class="section-subtitle">
+          These links connect the game, source code (if shared), and written report
+          so the website complements the main submission.
+        </p>
+
+        <article class="card">
+          <h3 class="card-title">Project links</h3>
+          <p class="card-tagline">
+            Update the GitHub and report links when they are ready.
+          </p>
+
+          <div class="link-row">
+            <a href="https://g310v.itch.io/campus-mood-diary" class="link-chip" target="_blank">
+              <span class="icon">🎮</span>
+              <span>Play Campus Mood Diary on itch.io</span>
+            </a>
+
+            <a href="[LINK_TO_GITHUB_REPO]" class="link-chip" target="_blank">
+              <span class="icon">📁</span>
+              <span>View source on GitHub</span>
+            </a>
+
+            <a href="[LINK_TO_REPORT_PDF]" class="link-chip" target="_blank">
+              <span class="icon">📄</span>
+              <span>Read the project report (PDF)</span>
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        © 2025 Christian Angelo Velarde. Campus Mood Diary – Group 2 “APlease”, GEB2507.
+        Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
